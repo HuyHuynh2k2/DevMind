@@ -1,12 +1,12 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 function ProblemCard({ problem }) {
   const [showSolution, setShowSolution] = useState(false);
 
   return (
-    <div className="border border-gray-400 rounded-2xl p-6 shadow-sm bg-white">
+    <div className="border border-gray-400 rounded-2xl p-6 shadow-sm bg-white mb-10">
       <div className="flex justify-between items-center mb-2">
-        <h2 className="text-xl font-semibold pl-12">{problem.name}</h2>
+        <h2 className="text-xl font-semibold pl-8">{problem.name}</h2>
         <span
           className={`px-3 py-1 text-sm rounded-full ${
             problem.difficulty === "Easy"
@@ -43,43 +43,14 @@ function ProblemCard({ problem }) {
   );
 }
 export default function NeetcodePage() {
-  const problems = [
-    {
-      id: 1,
-      difficulty: "Easy",
-      name: "Contains Duplicate",
-      question: `
-      Given an integer array nums, return true if any value appears more than once in the array, otherwise return false
+  const [problems, setProblems] = useState([]);
 
-      Example 1:
-      Input: nums = [1, 2, 3, 3]
-      Output: true
-
-      Example 2:
-      Input: nums = [1, 2, 3, 4]
-      Output: false
-      `,
-      solution: `
-      class Solution {
-        hasDuplicate(nums) {
-          let map = new Map();
-
-          for (const num of nums) {
-            if (map.has(num)) {
-              return true;
-            } else {
-              map.set(num, 1)
-            }
-          }
-          return false;
-        }
-      }
-      `,
-      approach: `
-      For this question we used Map to store the frequency of each number if this number already existed return true otherwise set it to 1
-      `,
-    },
-  ];
+  useEffect(() => {
+    fetch("/api/neetcode")
+      .then((res) => res.json())
+      .then((data) => setProblems(data))
+      .catch((err) => console.error("Error fetching problems:", err));
+  }, []);
 
   return (
     <div className="min-h-screen text-gray-800 p-6">
