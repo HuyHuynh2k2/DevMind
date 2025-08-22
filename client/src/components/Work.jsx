@@ -11,8 +11,22 @@ import uwImg from "../utils/uw.png";
 import hcpImg from "../utils/hcp.png";
 import skipliImg from "../utils/skipli.png";
 import marketeqImg from "../utils/marketeq.png";
+import amazon1 from "../utils/amazon1.jpeg";
+import amazon2 from "../utils/amazon2.jpeg";
+import amazon3 from "../utils/amazon3.jpeg";
+import caffined1 from "../utils/caffine1.png";
+import citizen1 from "../utils/citizen1.png";
+import citizen2 from "../utils/citizen2.png";
+import pokedex1 from "../utils/pokedex.jpeg";
+import receipt1 from "../utils/receipt1.png";
+import receipt2 from "../utils/receipt2.png";
+import trivia1 from "../utils/trivia1.png";
+import trivia2 from "../utils/trivia2.png";
 
+import { useState } from "react";
 export default function WorkPage() {
+  const [theImage, setTheImage] = useState(0);
+
   const timeline = [
     {
       year: "2021",
@@ -63,7 +77,7 @@ export default function WorkPage() {
         "Financial manage application where you could tracker your payment base on the recieve you stored in",
       tool: "React, JavaScript, SQL, Firebase, Git",
       github: "https://github.com/HuyHuynh2k2/reciept",
-      images: [],
+      images: [receipt1, receipt2],
     },
     {
       name: "Trivia Maza",
@@ -71,7 +85,7 @@ export default function WorkPage() {
         "Magic trivia game where we would need to logically solve the maze and answer the question to win the game",
       tool: "Java, Javaswing, mySQL",
       github: "https://github.com/Drewwb/cars-maze",
-      images: [],
+      images: [trivia1, trivia2],
     },
     {
       name: "Catffiend",
@@ -79,14 +93,14 @@ export default function WorkPage() {
         "Store 153 pokemon infomation and include their evoluation, source, skills",
       tool: "JavaScript, Firebase, React",
       github: "https://github.com/HuyHuynh2k2/catffiend",
-      images: [],
+      images: [caffined1],
     },
     {
       name: "Pokedex",
       description: "This website store all hot movie update 24/7",
       tool: "TypeScript, Firebase, React",
       github: "https://github.com/HuyHuynh2k2/pokedex",
-      images: [],
+      images: [pokedex1],
     },
     {
       name: "Citizen",
@@ -94,7 +108,15 @@ export default function WorkPage() {
         "This website would international stundent, H1B work practice the citizenship exam",
       tool: "Javascript, React",
       github: "https://github.com/HuyHuynh2k2/citizen",
-      images: [],
+      images: [citizen1, citizen2],
+    },
+    {
+      name: "Amazon Clone",
+      description:
+        "This website would international stundent, H1B work practice the citizenship exam",
+      tool: "Javascript, React",
+      github: "https://github.com/HuyHuynh2k2/citizen",
+      images: [amazon1, amazon2, amazon3],
     },
   ];
 
@@ -150,8 +172,61 @@ export default function WorkPage() {
           ))}
         </Timeline>
       </div>
-      <div>
-        <p className="text-2xl font-bold mb-20">Project</p>
+      <div className="mt-20">
+        <p className="text-2xl font-bold mb-20">Projects</p>
+        <div className="flex flex-col gap-12">
+          {project.map((proj, index) => (
+            <div
+              key={index}
+              className="flex flex-col md:flex-row justify-between gap-6 border rounded-xl shadow-lg p-4"
+            >
+              {/* Left: Images */}
+              <div className="flex gap-4 overflow-x-auto md:w-1/2">
+                <button
+                  onClick={() => {
+                    if (proj.images.length === 1 || index === 0) {
+                      setTheImage(proj.images[0]);
+                    } else {
+                      setTheImage(proj.images[index - 1]);
+                    }
+                  }}
+                >
+                  <i class="fa-regular fa-circle-left"></i>
+                </button>
+
+                <div className="w-72 h-72 flex items-center justify-center bg-gray-100 text-gray-500 rounded-lg">
+                  <img src={proj.images[theImage]} />
+                </div>
+                <button
+                  onClick={() => {
+                    if (proj.images.length === 1 || index > proj.length - 1) {
+                      setTheImage(proj.images[0]);
+                    } else {
+                      setTheImage(proj.images[index + 1]);
+                    }
+                  }}
+                >
+                  <i class="fa-regular fa-circle-right"></i>
+                </button>
+              </div>
+
+              {/* Right: Project Info */}
+              <div className="flex flex-col justify-center md:w-1/2">
+                <h3 className="font-bold text-2xl mb-2">{proj.name}</h3>
+                <p className="text-gray-600 mb-4">{proj.description}</p>
+                <p className="text-gray-500 mb-4">{proj.tool}</p>
+                <a
+                  href={proj.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500"
+                >
+                  View on GitHub →
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
