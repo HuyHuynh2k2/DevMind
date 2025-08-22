@@ -7,6 +7,7 @@ import Study, {
   NeetCode,
   Interview,
 } from "./components/Study.jsx";
+import Work from "./components/Work.jsx";
 
 function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -82,11 +83,6 @@ function Home() {
     </main>
   );
 }
-
-function Work() {
-  return <h1 className="text-4xl">Work Page</h1>;
-}
-
 function Contact() {
   return <h1 className="text-4xl">Contact Page</h1>;
 }
