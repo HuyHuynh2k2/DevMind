@@ -4,7 +4,7 @@ import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 import bellevueImg from "../utils/bellevuecollege.png";
 import uwImg from "../utils/uw.png";
@@ -24,6 +24,54 @@ import trivia1 from "../utils/trivia1.png";
 import trivia2 from "../utils/trivia2.png";
 
 import { useState } from "react";
+
+function ImageCard({ photos }) {
+  const [photo, setPhoto] = useState(0);
+
+  return (
+    <div className="flex items-center gap-4 md:w-1/2">
+      {/* Left Arrow */}
+      <button
+        onClick={() => {
+          if (photos.length === 1) {
+            setPhoto(0);
+          } else if (photo === 0) {
+            setPhoto(photos.length - 1);
+          } else {
+            setPhoto(photo - 1);
+          }
+        }}
+        className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition"
+      >
+        <i className="fa-regular fa-circle-left text-2xl"></i>
+      </button>
+
+      {/* Image Container */}
+      <div className="w-80 h-80 flex items-center justify-center bg-gray-100 rounded-xl shadow-md overflow-hidden">
+        <img
+          src={photos[photo]}
+          alt=""
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* Right Arrow */}
+      <button
+        onClick={() => {
+          if (photos.length === 1 || photo === photos.length - 1) {
+            setPhoto(0);
+          } else {
+            setPhoto(photo + 1);
+          }
+        }}
+        className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition"
+      >
+        <i className="fa-regular fa-circle-right text-2xl"></i>
+      </button>
+    </div>
+  );
+}
+
 export default function WorkPage() {
   const [theImage, setTheImage] = useState(0);
 
@@ -181,35 +229,7 @@ export default function WorkPage() {
               className="flex flex-col md:flex-row justify-between gap-6 border rounded-xl shadow-lg p-4"
             >
               {/* Left: Images */}
-              <div className="flex gap-4 overflow-x-auto md:w-1/2">
-                <button
-                  onClick={() => {
-                    if (proj.images.length === 1 || index === 0) {
-                      setTheImage(proj.images[0]);
-                    } else {
-                      setTheImage(proj.images[index - 1]);
-                    }
-                  }}
-                >
-                  <i class="fa-regular fa-circle-left"></i>
-                </button>
-
-                <div className="w-72 h-72 flex items-center justify-center bg-gray-100 text-gray-500 rounded-lg">
-                  <img src={proj.images[theImage]} />
-                </div>
-                <button
-                  onClick={() => {
-                    if (proj.images.length === 1 || index > proj.length - 1) {
-                      setTheImage(proj.images[0]);
-                    } else {
-                      setTheImage(proj.images[index + 1]);
-                    }
-                  }}
-                >
-                  <i class="fa-regular fa-circle-right"></i>
-                </button>
-              </div>
-
+              <ImageCard photos={proj.images} />
               {/* Right: Project Info */}
               <div className="flex flex-col justify-center md:w-1/2">
                 <h3 className="font-bold text-2xl mb-2">{proj.name}</h3>
