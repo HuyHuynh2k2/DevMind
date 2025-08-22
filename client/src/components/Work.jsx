@@ -220,26 +220,34 @@ export default function WorkPage() {
           ))}
         </Timeline>
       </div>
-      <div className="mt-20">
-        <p className="text-2xl font-bold mb-20">Projects</p>
-        <div className="flex flex-col gap-12">
+
+      {/* PROJECT */}
+
+      <div className="mt-50">
+        <p className="text-2xl font-bold mb-12">Projects</p>
+        <div className="flex flex-col gap-8">
           {project.map((proj, index) => (
             <div
               key={index}
-              className="flex flex-col md:flex-row justify-between gap-6 border rounded-xl shadow-lg p-4"
+              className="
+          flex flex-col md:flex-row items-start gap-6 
+          rounded-xl ring-1 ring-gray-100 p-6 
+          transition-transform duration-300 hover:scale-102
+        "
             >
               {/* Left: Images */}
               <ImageCard photos={proj.images} />
+
               {/* Right: Project Info */}
               <div className="flex flex-col justify-center md:w-1/2">
-                <h3 className="font-bold text-2xl mb-2">{proj.name}</h3>
-                <p className="text-gray-600 mb-4">{proj.description}</p>
-                <p className="text-gray-500 mb-4">{proj.tool}</p>
+                <h3 className="font-semibold text-xl mb-1">{proj.name}</h3>
+                <p className="text-gray-600 text-sm mb-2">{proj.description}</p>
+                <p className="text-gray-400 text-xs mb-3">{proj.tool}</p>
                 <a
                   href={proj.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500"
+                  className="text-blue-500 text-sm font-medium hover:underline"
                 >
                   View on GitHub →
                 </a>

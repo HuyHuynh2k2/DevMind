@@ -8,6 +8,7 @@ import Study, {
   Interview,
 } from "./components/Study.jsx";
 import Work from "./components/Work.jsx";
+import backgroundImg from "./utils/background.png";
 
 function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -31,7 +32,13 @@ function Home() {
 
   return (
     <main
-      className="h-screen flex relative bg-[#efe9e4] overflow-hidden"
+      className="h-screen flex relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${backgroundImg})`,
+        backgroundSize: "cover", // make the image fill the whole element
+        backgroundPosition: "center", // center it
+        backgroundRepeat: "no-repeat", // do not repeat
+      }}
       onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
     >
       {/* Smooth yellow spotlight */}
@@ -74,7 +81,7 @@ function Home() {
 
       {/* Navigation */}
       <div className="self-route w-[60%] flex items-center justify-center relative z-10">
-        <div className="flex flex-col gap-5 text-[5rem] font-bold">
+        <div className="flex flex-col gap-5 text-[6rem] font-bold">
           <Link to="/work">Work</Link>
           <Link to="/learn">Learn</Link>
           <Link to="/contact">Contact</Link>
