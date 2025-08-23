@@ -170,7 +170,8 @@ export default function WorkPage() {
 
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-20">Industry History</h1>
+      <h1 className="text-2xl font-bold mb-20">Experience</h1>
+
       <div className="flex justify-center items-center mr-[35%]">
         <Timeline>
           {timeline.map((tl, index) => (
@@ -231,7 +232,7 @@ export default function WorkPage() {
               key={index}
               className="
           flex flex-col md:flex-row items-start gap-6 
-          rounded-xl ring-1 ring-gray-100 p-6 
+          rounded-xl ring-1 ring-black p-6 
           transition-transform duration-300 hover:scale-102
         "
             >

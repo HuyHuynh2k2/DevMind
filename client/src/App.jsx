@@ -7,8 +7,9 @@ import Study, {
   NeetCode,
   Interview,
 } from "./components/Study.jsx";
+import ContactPage from "./components/ContactPage.jsx";
 import Work from "./components/Work.jsx";
-import backgroundImg from "./utils/background.png";
+import backgroundImg from "./utils/bg.png";
 
 function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -108,7 +109,7 @@ export default function App() {
       <Route path="/learn/neetcode" element={<NeetCode />} />
       <Route path="/learn/Interview" element={<Interview />} />
 
-      <Route path="/contact" element={<Contact />} />
+      <Route path="/contact" element={<ContactPage />} />
     </Routes>
   );
 }
