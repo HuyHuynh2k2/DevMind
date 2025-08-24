@@ -9,7 +9,7 @@ import Study, {
 } from "./components/Study.jsx";
 import ContactPage from "./components/ContactPage.jsx";
 import Work from "./components/Work.jsx";
-import backgroundImg from "./utils/bg.png";
+import backgroundImg from "./utils/homebg.png";
 
 function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -33,11 +33,9 @@ function Home() {
 
   return (
     <main
-      className="h-screen flex relative overflow-hidden"
+      className="h-screen flex relative overflow-hidden bg-cover bg-fixed bg-center"
       style={{
         backgroundImage: `url(${backgroundImg})`,
-        backgroundSize: "cover", // make the image fill the whole element
-        backgroundPosition: "center", // center it
         backgroundRepeat: "no-repeat", // do not repeat
       }}
       onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
@@ -56,7 +54,7 @@ function Home() {
       />
 
       {/* Sidebar */}
-      <div className="w-[20%] flex flex-col items-center justify-between py-8 relative z-10">
+      <div className="w-[20%] flex flex-col items-center justify-between py-8 relative z-10 text-amber-50">
         <div className="flex flex-col items-center space-y-6">
           <p className="rotate-90 tracking-widest text-sm">LI</p>
           <p className="rotate-90 tracking-widest text-sm">TW</p>
@@ -67,7 +65,7 @@ function Home() {
       </div>
 
       {/* Middle */}
-      <div className="w-[30%] flex items-center justify-center relative z-10">
+      <div className="w-[30%] flex items-center justify-center relative z-10 text-amber-50">
         <div className="flex flex-col gap-4 text-sm">
           <p>Huy L Huynh</p>
           <p>
