@@ -22,6 +22,7 @@ import receipt1 from "../utils/receipt1.png";
 import receipt2 from "../utils/receipt2.png";
 import trivia1 from "../utils/trivia1.png";
 import trivia2 from "../utils/trivia2.png";
+import workbg from "../utils/workbg2.png";
 
 import { useState } from "react";
 
@@ -169,10 +170,10 @@ export default function WorkPage() {
   ];
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-20">Experience</h1>
+    <div className="p-8 ">
+      <h1 className="text-3xl font-bold mb-20 font-sans">Experience</h1>
 
-      <div className="flex justify-center items-center mr-[35%]">
+      <div className="flex justify-center items-center mr-[35%] ">
         <Timeline>
           {timeline.map((tl, index) => (
             <TimelineItem key={index}>
@@ -190,28 +191,25 @@ export default function WorkPage() {
               </TimelineSeparator>
 
               <TimelineContent>
-                <div className="flex items-center gap-4 font-mono">
+                <div className="flex items-center gap-4 font-sans">
                   <img
                     src={tl.image}
                     alt={tl.title}
                     className="w-12 h-12 object-contain rounded-full"
                   />
                   <div>
-                    <Typography sx={{ fontFamily: '"Space Mono", monospace' }}>
+                    <Typography sx={{ fontFamily: '"Inter", sans-serif' }}>
                       {tl.year}
                     </Typography>
                     <Typography
                       variant="h8"
                       component="span"
                       className="font-semibold"
-                      sx={{ fontFamily: '"Space Mono", monospace' }}
+                      sx={{ fontFamily: '"Inter", sans-serif' }}
                     >
                       {tl.title}
                     </Typography>
-                    <Typography
-                      color="textSecondary"
-                      sx={{ fontFamily: '"Space Mono", monospace' }}
-                    >
+                    <Typography sx={{ fontFamily: '"Inter", sans-serif' }}>
                       {tl.description}
                     </Typography>
                   </div>
@@ -224,7 +222,7 @@ export default function WorkPage() {
 
       {/* PROJECT */}
 
-      <div className="mt-50">
+      {/* <div className="mt-50">
         <p className="text-2xl font-bold mb-12">Projects</p>
         <div className="flex flex-col gap-8">
           {project.map((proj, index) => (
@@ -236,10 +234,10 @@ export default function WorkPage() {
           transition-transform duration-300 hover:scale-102
         "
             >
-              {/* Left: Images */}
+              
               <ImageCard photos={proj.images} />
 
-              {/* Right: Project Info */}
+              
               <div className="flex flex-col justify-center md:w-1/2">
                 <h3 className="font-semibold text-xl mb-1">{proj.name}</h3>
                 <p className="text-gray-600 text-sm mb-2">{proj.description}</p>
@@ -256,7 +254,7 @@ export default function WorkPage() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

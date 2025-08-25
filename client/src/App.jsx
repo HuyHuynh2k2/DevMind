@@ -7,6 +7,9 @@ import Study, {
   NeetCode,
   Interview,
 } from "./components/Study.jsx";
+
+import StudyPage from "./components/StudyPage.jsx";
+
 import ContactPage from "./components/ContactPage.jsx";
 import Work from "./components/Work.jsx";
 import backgroundImg from "./utils/homebg.png";
@@ -80,7 +83,7 @@ function Home() {
 
       {/* Navigation */}
       <div className="self-route w-[60%] flex items-center justify-center relative z-10">
-        <div className="flex flex-col gap-5 text-[6rem] font-bold">
+        <div className="flex flex-col gap-5 text-[4rem] font-bold">
           <Link to="/work">Work</Link>
           <Link to="/learn">Learn</Link>
           <Link to="/contact">Contact</Link>
@@ -100,7 +103,7 @@ export default function App() {
       <Route path="/work" element={<Work />} />
 
       {/* Study page + full topic pages */}
-      <Route path="/learn" element={<Study />} />
+      <Route path="/learn" element={<StudyPage />} />
       <Route path="/learn/DataStructure" element={<DataStructure />} />
       <Route path="/learn/SystemDesign" element={<SystemDesign />} />
       <Route path="/learn/Algorithm" element={<Algorithm />} />

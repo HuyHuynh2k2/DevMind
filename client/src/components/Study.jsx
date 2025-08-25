@@ -73,7 +73,7 @@ export default function Study() {
   ];
 
   return (
-    <div className="relative h-screen flex items-center justify-center bg-[#efe9e4] overflow-hidden">
+    <div className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Header */}
       <div className="text-4xl font-bold z-10 flex items-center gap-3">
         <p>Formula</p>
