@@ -6,6 +6,19 @@ import image4 from "../utils/saigon4.jpeg";
 import image5 from "../utils/saigon5.jpg";
 import { useNavigate } from "react-router-dom";
 
+export function DataStructure() {
+  return <div className="p-6 text-4xl">Data Structure Page</div>;
+}
+export function SystemDesign() {
+  return <div className="p-6 text-4xl">System Design Page</div>;
+}
+export function Algorithm() {
+  return <div className="p-6 text-4xl">Algorithm Page</div>;
+}
+
+export function Interview() {
+  return <div className="p-6 text-4xl">Interview Page</div>;
+}
 export function Clock() {
   const [time, setTime] = useState(new Date());
 

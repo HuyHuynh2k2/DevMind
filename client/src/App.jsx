@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import Study, {
+import {
   DataStructure,
   SystemDesign,
   Algorithm,
-  NeetCode,
   Interview,
-} from "./components/Study.jsx";
+} from "./components/StudyPage.jsx";
 
 import StudyPage from "./components/StudyPage.jsx";
+import NeetCodePages from "./components/NeetcodePages.jsx";
 
 import ContactPage from "./components/ContactPage.jsx";
 import Work from "./components/Work.jsx";
@@ -107,7 +107,7 @@ export default function App() {
       <Route path="/learn/DataStructure" element={<DataStructure />} />
       <Route path="/learn/SystemDesign" element={<SystemDesign />} />
       <Route path="/learn/Algorithm" element={<Algorithm />} />
-      <Route path="/learn/neetcode" element={<NeetCode />} />
+      <Route path="/learn/neetcode" element={<NeetCodePages />} />
       <Route path="/learn/Interview" element={<Interview />} />
 
       <Route path="/contact" element={<ContactPage />} />

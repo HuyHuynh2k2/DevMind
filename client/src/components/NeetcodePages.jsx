@@ -5,6 +5,7 @@ async function getProblem() {
   const res = await fetch("/api/neetcode");
   return res.json();
 }
+
 export default function NeetCodePages() {
   const navigate = useNavigate();
   const [filter, setFilter] = useState(null);
