@@ -2,6 +2,7 @@ import React from "react";
 import f1 from "../utils/f1.png";
 import { useNavigate } from "react-router-dom";
 import NeetcodePage from "./NeetcodePage.jsx";
+import NeetCodePages from "./NeetcodePages.jsx";
 
 // Topic pages (can also be moved to separate files if you want)
 export function DataStructure() {
@@ -14,7 +15,7 @@ export function Algorithm() {
   return <div className="p-6 text-4xl">Algorithm Page</div>;
 }
 export function NeetCode() {
-  return <NeetcodePage />;
+  return <NeetCodePages />;
 }
 export function Interview() {
   return <div className="p-6 text-4xl">Interview Page</div>;

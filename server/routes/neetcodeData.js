@@ -3,6 +3,7 @@ const problems = [
     id: 1,
     difficulty: "Easy",
     name: "Contains Duplicate",
+    topic: "Arrays & Hashing",
     question: `
     Given an integer array nums, return true if any value appears more than once in the array, otherwise return false
 
@@ -38,6 +39,7 @@ const problems = [
     id: 2,
     difficulty: "Easy",
     name: "Valid Diagram",
+    topic: "Arrays & Hashing",
     question: `
     Given two strings s and t, return true if the two strings are anagrams of each other, otherwise return false,
 
@@ -82,6 +84,7 @@ const problems = [
     id: 3,
     difficulty: "Easy",
     name: "Two Sum",
+    topic: "Arrays & Hashing",
     question: `
     Given an array of integers nums and an integer target, return the indices i and j such that nums[i] + num[j] == target and i != j.
 
@@ -125,6 +128,7 @@ const problems = [
     id: 4,
     difficulty: "Medium",
     name: "Group Anagram",
+    topic: "Arrays & Hashing",
     question: `
     Given an array of string strs, group all anagrams together into sublists. You may return the output in any order.
 
@@ -172,6 +176,7 @@ const problems = [
     id: 5,
     difficulty: "Medium",
     name: "Top K Frequent Elements",
+    topic: "Arrays & Hashing",
     question: `
     Given an integer array nums and an integer k, return the k most frequent elements within the array.
 
@@ -218,6 +223,7 @@ const problems = [
     id: 6,
     difficulty: "Medium",
     name: "Top K Frequent Elements",
+    topic: "Arrays & Hashing",
     question: `
     Design an algorithm to encode a list of strings to a single string. The encoded string is then decoded back to the original list of strings.
 
@@ -271,6 +277,7 @@ const problems = [
     id: 7,
     difficulty: "Medium",
     name: "Products of Array Except Self",
+    topic: "Arrays & Hashing",
     question: `
     Given an integer array nums, return an array output where output[i] is the product of all the elements of nums except nums[i].
     
