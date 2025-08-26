@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 async function getProblem() {
   const res = await fetch("/api/neetcode");
   return res.json();
 }
 export default function NeetCodePages() {
+  const navigate = useNavigate();
   const [filter, setFilter] = useState(null);
   const [problems, setProblems] = useState([]);
   const [selectedProblem, setSelectedProblem] = useState(null);
@@ -56,7 +58,9 @@ export default function NeetCodePages() {
         <div className="text-[2rem] font-bold">
           NEET<span className="text-amber-600">CODE</span>
         </div>
-        <p className="text-[1.5rem] font-bold">HOME</p>
+        <button className="flex" onClick={() => navigate("/")}>
+          <p className="text-[1.5rem] font-bold">HOME</p>
+        </button>
       </div>
 
       <hr></hr>
