@@ -114,11 +114,11 @@ export default function NeetCodePages() {
       {/* Modal */}
       {selectedProblem && (
         <div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 "
+          className="fixed inset-0 bg-black/70 flex justify-center items-start overflow-y-auto z-50"
           onClick={() => setSelectedProblem(null)}
         >
           <div
-            className="bg-white p-6 rounded-lg shadow-lg max-w-5xl w-full relative]"
+            className="bg-white p-6 rounded-lg shadow-lg max-w-7xl w-full my-10 relative"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-4">
@@ -132,7 +132,7 @@ export default function NeetCodePages() {
               </span>
             </div>
 
-            <hr></hr>
+            <hr />
 
             {/* Question */}
             <div className="mb-4 mt-4">
@@ -142,7 +142,7 @@ export default function NeetCodePages() {
               </pre>
             </div>
 
-            <hr></hr>
+            <hr />
 
             {selectedProblem.approach && (
               <div className="mb-4 mt-4">
@@ -153,7 +153,8 @@ export default function NeetCodePages() {
               </div>
             )}
 
-            <hr></hr>
+            <hr />
+
             {selectedProblem.solution && (
               <div className="mb-4 mt-4">
                 <h3 className="text-lg font-semibold mb-4">Solution</h3>
@@ -162,12 +163,6 @@ export default function NeetCodePages() {
                 </pre>
               </div>
             )}
-            <button
-              className="dont-bold absolute top-10 right-10 text-white hover:text-gray-800 text-2xl"
-              onClick={() => setSelectedProblem(null)}
-            >
-              ✕
-            </button>
           </div>
         </div>
       )}

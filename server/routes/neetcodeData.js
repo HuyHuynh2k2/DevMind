@@ -222,7 +222,7 @@ const problems = [
   {
     id: 6,
     difficulty: "Medium",
-    name: "Top K Frequent Elements",
+    name: "Encode and Decode Strings",
     topic: "Arrays & Hashing",
     question: `
     Design an algorithm to encode a list of strings to a single string. The encoded string is then decoded back to the original list of strings.
@@ -292,17 +292,251 @@ const problems = [
     solution: `
     class Solution {
       productExceptSelf(nums) {
-        let forward = [nums[0]];
-        let backward = [];
+        let forward = [...nums];
+        let backward = [...nums];
 
         for (let i = 1; i < nums.length - 1; i++) {
-          forward.push();
+          forward[i] = forward[i-1] * nums[i];
+        }
+        for (let j = nums.length - 2; j >= 0; j++) {
+          backward[j] = backward[j + 1] * nums[j];
+        }
+
+        let res = [];
+        for (let k = 0; k < nums.length; k++) {
+          if (k === 0) {
+            res[k] = backward[k + 1];
+          } else if (k === nums.length - 1) {
+            res[k] = forward[k -1];
+          } else {
+            res[k] = forward[k - 1] * backward[k + 1]; 
+          }
+        }
+        
+        return res;
+      }
+    }
+    `,
+    approach: `
+      One things I want to notice that when we want to copy the entire element of the array in JS, make sure you do 
+      "let forward = [...nums]" instead of "let forward = nums" because if we use the second way, it would create a 
+      reference to the original array and both will be affacted but the first way is that you create the shalow copy
+      and will not affact the original copy.
+
+      For the approach to this question, we created two array forward (multiply foward) and backward (multiply backward)
+    `,
+  },
+  {
+    id: 8,
+    difficulty: "Medium",
+    name: "Valid Sudoku",
+    topic: "Arrays & Hashing",
+    question: `
+    You are given a 9 x 9 Sudoku board board. A Sudoku board is valid if the following rules are followed:    
+    
+    1. Each row must contain the digits 1-9 without duplicates.
+    2. Each column must contain the digits 1-9 without duplicates.
+    3. Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without duplicates.
+
+    Example 1:
+    Input: board = 
+    [["1","2",".",".","3",".",".",".","."],
+    ["4",".",".","5",".",".",".",".","."],
+    [".","9","8",".",".",".",".",".","3"],
+    ["5",".",".",".","6",".",".",".","4"],
+    [".",".",".","8",".","3",".",".","5"],
+    ["7",".",".",".","2",".",".",".","6"],
+    [".",".",".",".",".",".","2",".","."],
+    [".",".",".","4","1","9",".",".","8"],
+    [".",".",".",".","8",".",".","7","9"]]
+
+    Output: true
+
+
+    Example 2:
+    Input: board = 
+    [["1","2",".",".","3",".",".",".","."],
+    ["4",".",".","5",".",".",".",".","."],
+    [".","9","1",".",".",".",".",".","3"],
+    ["5",".",".",".","6",".",".",".","4"],
+    [".",".",".","8",".","3",".",".","5"],
+    ["7",".",".",".","2",".",".",".","6"],
+    [".",".",".",".",".",".","2",".","."],
+    [".",".",".","4","1","9",".",".","8"],
+    [".",".",".",".","8",".",".","7","9"]]
+
+    Output: false
+
+    `,
+    solution: `
+    isValidSudoku(board) {
+        let map = new Map();
+
+        for (let row = 0; row < 9; row++) {
+            for (let col = 0; col < 9; col++) {
+                let val = board[row][col];
+                if (val !== ".") {
+                    let rowKey = \`\${val} in row \${row}\`;
+                    let colKey = \`\${val} in col \${col}\`;
+                    let boxKey = \`\${val} in box \${Math.floor(row / 3)}-\${Math.floor(col / 3)}\`;
+
+                    if (map.has(rowKey) || map.has(colKey) || map.has(boxKey)) {
+                        return false;
+                    }
+
+                    map.set(rowKey, true);
+                    map.set(colKey, true);
+                    map.set(boxKey, true);
+                }
+            }
+        }
+        return true;
+    }
+`,
+    approach: `
+      The way to approach this problem is we store them in hashmap as string of row / col and table that element belongs to.
+    `,
+  },
+  {
+    id: 9,
+    difficulty: "Medium",
+    name: "Longest Consecutive Sequence",
+    topic: "Arrays & Hashing",
+    question: `
+    Given an array of integers nums, return the length of the longest consecutive sequence of elements that can be formed.    
+    
+    A consecutive sequence is a sequence of elements in which each element is exactly 1 greater than the previous element. The elements do not have to be consecutive in the original array.
+    
+    You must write an algorithm that runs in O(n) time.
+
+    Example 1:
+    Input: nums = [2,20,4,10,3,4,5]
+    Output: 4
+
+    Example 2:
+    Input: nums = [0,3,2,5,4,6,1,1]
+    Output: 7
+    
+    `,
+    solution: `
+    class Solution {
+      longestConsecutive(nums) {
+        const set = new Set(nums);
+        let longest = 1;
+
+        for (let num of nums) {
+          if (!set.has(num - 1)) {
+            let length = 1;
+            while (set.has(num + length)) {
+              length++;
+            }
+            
+            longest = Math.max(longest, length);
+          }
+        }
+
+        return longest;
+      }
+    }
+    `,
+    approach: `
+      The brute tio solve this problem is loop through the array and at each element we find the max continuous part we could get and store it
+
+      Instead do it for each element we only do it for the "start elment which is the one dont have num - 1" and find the continuous for those
+
+      O(n)
+    `,
+  },
+  {
+    id: 10,
+    difficulty: "Easy",
+    name: "Valid Palindrome",
+    topic: "Two Pointers",
+    question: `
+    Given a string s, return true if it is a palindrome, otherwise return false.    
+        
+    A palindrome is a string that reads the same forward and backward. It is also case-insensitive and ignores all non-alphanumeric characters.
+    
+    Note: Alphanumeric characters consist of letters (A-Z, a-z) and numbers (0-9).
+
+    Example 1:
+    Input: s = "Was it a car or a cat I saw?"
+    Output: true
+
+    Example 2:
+    Input: s = "tab a cat"
+    Output: false
+    
+    `,
+    solution: `
+    class Solution {
+      isPalindrome(s) {
+        s = s.toLowerCase();
+        const arr = [...s].filter((char) => this.isAlphanumeric(char));
+
+        let left = 0;
+        let right = arr.length - 1;
+
+        while (left < right) {
+          if (arr[left] !== arr[right]) {
+            return false;
+          }
+          left++;
+          right--;
+        }
+        return true;
+      }
+      isAlphanumeric(char) {
+        const regex = /^[a-zA-Z0-9]*/;
+        return regex.test(char);
+      }
+    }
+    `,
+    approach: `
+      The only hard part of this problem is regex to eliminate white space and special characters.
+    `,
+  },
+  {
+    id: 11,
+    difficulty: "Medium",
+    name: "Valid Palindrome",
+    topic: "Two Pointers",
+    question: `
+    Given an array of integers numbers that is sorted in non-decreasing order.
+
+    Return the indices (1-indexed) of two numbers, [index1, index2], such that they add up to a given target number target and index1 < index2. Note that index1 and index2 cannot be equal, therefore you may not use the same element twice.
+
+    There will always be exactly one valid solution.
+
+    Your solution must use O(1) additional space.
+
+    Example 1:
+    Input: numbers = [1,2,3,4], target = 3
+    Output: [1,2]
+    
+    `,
+    solution: `
+    class Solution {
+      twoSum(numbers, target) {
+        let left = 0;
+        left right = numbers.length - 1;
+
+        while (left < right) {
+          let current = numbers[left] + numbers[right];
+
+          if (current === target) {
+            return [left+1, right+1];
+          } else if (current < target) {
+            left++;
+          } else {
+            right--;
+          }
         }
       }
     }
     `,
     approach: `
-      For this problem we set up forward and backward array 
+      Easy Easy lemon tree
     `,
   },
 ];
