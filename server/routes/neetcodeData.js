@@ -499,7 +499,7 @@ const problems = [
   {
     id: 11,
     difficulty: "Medium",
-    name: "Valid Palindrome",
+    name: "TWO SUM V2",
     topic: "Two Pointers",
     question: `
     Given an array of integers numbers that is sorted in non-decreasing order.
@@ -537,6 +537,170 @@ const problems = [
     `,
     approach: `
       Easy Easy lemon tree
+    `,
+  },
+  {
+    id: 12,
+    difficulty: "Medium",
+    name: "3SUM",
+    topic: "Two Pointers",
+    question: `
+    Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] where nums[i] + nums[j] + nums[k] == 0, and the indices i, j and k are all distinct.
+
+    The output should not contain any duplicate triplets. You may return the output and the triplets in any order.
+
+    Example 1:
+    Input: nums = [-1,0,1,2,-1,-4]
+    Output: [[-1,-1,2],[-1,0,1]]
+
+    Example 2:
+    Input: nums = [0,1,1]
+    Output: []
+    
+    `,
+    solution: `
+    class Solution {
+      threeSum(nums) {
+        let res = [];
+        nums = nums.sort((a, b) => a - b);
+
+        for (let i = 0; i < nums.length - 2; i++) {
+          if (i > 0 && nums[i] === nums[i + 1]) continue;
+          const target = nums[i];
+
+          let left = i + 1;
+          let right = nums.length - 1;
+
+          while (left < right) {
+            
+            while (left < right && nums[left] === nums[left + 1]) left++;
+            while (left < right && nums[right] === nums[right - 1]) right--;
+
+            const sum = nums[left] + nums[right];
+
+            if (sum + target === 0) {
+              res.push(taget, nums[left], nums[right]);
+
+              left++;
+              right--;
+            } else if (sum + target < 0) {
+              left++; 
+            } else {
+              right--;
+            }
+          }
+        }
+        return res;
+      }
+    }
+    `,
+    approach: `
+      This is tricky question, we could go through every element of the array and split array from index + 1 to end, and set up two pointer
+      that would work but that is really hard to remove dupplicated array at the end before we return, for example res = [[1, 1, -2], [1, 1, -2]] 
+      if we put it to the set and like "const set = new Set(res)" that would not work instead we have to convert them to String before put it to the set
+      "const set = new Set(arr.map((a) => JOSN.stringify(a))) return Array.from(set).map(str => JSON.parse(str))"
+
+      The easy way to solve is eleminate the duplicated case on the way we solving, so we sort the original array, and use while loop to
+      move on if we see the next number same as current, do the same logic when we choose left and right pointer. One last thing I we need to
+      remember is when we found a pair that plus sum to be 0 we do not stop but keep increment both left and right
+    `,
+  },
+  {
+    id: 13,
+    difficulty: "Medium",
+    name: "CONTAIN WITH MOST WATER",
+    topic: "Two Pointers",
+    question: `
+    You are given an integer array heights where heights[i] represents the height of the ith bar.
+
+    You may choose any two bars to form a container. Return the maximum amount of water a container can store.
+
+    Example 1:
+    Input: height = [1,7,2,5,4,7,3,6]
+    Output: 36
+
+    Example 2:
+    Input: height = [2,2,2]
+    Output: 4
+    
+    `,
+    solution: `
+    class Solution {
+      maxArea(heights) {
+        let max = 0;
+        let left = 0;
+        let right = heights.length - 1
+
+        while (left < right) {
+          cosnt h = Math.min(heights[left], heights[right]);
+          const w = right - left;
+          const area = w * h;
+          max = Math.max(max, area);
+
+          if (heights[left] <= heights[right]) {
+            left++;
+          } else {
+            right--;
+          }
+        }
+        return max
+      }
+    }
+    `,
+    approach: `
+      Move smaller pointer to get a chance to have chance to get bigger value.
+    `,
+  },
+  {
+    id: 14,
+    difficulty: "Hard",
+    name: "TRAPPING RAIN WATER",
+    topic: "Two Pointers",
+    question: `
+    You are given an array of non-negative integers height which represent an elevation map. Each value height[i] represents the height of a bar, which has a width of 1.
+
+    Return the maximum area of water that can be trapped between the bars.
+
+    Example 1:
+    Input: height = [0,2,0,3,1,0,1,3,2,1]
+    Output: 9
+    
+    `,
+    solution: `
+    class Solution {
+        public int trap(int[] height) {
+            if (height == null || height.length == 0) {
+                return 0;
+            }
+
+            int n = height.length;
+            int[] maxLeft = new int[n];
+            int[] maxRight = new int[n];
+
+            // Fill maxLeft array
+            maxLeft[0] = height[0];
+            for (int i = 1; i < n; i++) {
+                maxLeft[i] = Math.max(maxLeft[i - 1], height[i]);
+            }
+
+            // Fill maxRight array
+            maxRight[n - 1] = height[n - 1];
+            for (int i = n - 2; i >= 0; i--) {
+                maxRight[i] = Math.max(maxRight[i + 1], height[i]);
+            }
+
+            // Calculate the trapped water
+            int trappedWater = 0;
+            for (int i = 0; i < n; i++) {
+                trappedWater += Math.min(maxLeft[i], maxRight[i]) - height[i];
+            }
+
+            return trappedWater;
+        }
+    }
+    `,
+    approach: `
+      Will go back
     `,
   },
 ];
