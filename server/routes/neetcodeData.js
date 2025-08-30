@@ -703,6 +703,198 @@ const problems = [
       Will go back
     `,
   },
+  {
+    id: 15,
+    difficulty: "Medium",
+    name: "MINIMUM STACK",
+    topic: "Stack",
+    question: `
+    Design a stack class that supports the push, pop, top, and getMin operations.
+
+    MinStack() initializes the stack object.
+    void push(int val) pushes the element val onto the stack.
+    void pop() removes the element on the top of the stack.
+    int top() gets the top element of the stack.
+    int getMin() retrieves the minimum element in the stack.
+
+    Each function should run in O(1)
+
+    Example 1:
+
+    Input: ["MinStack", "push", 1, "push", 2, "push", 0, "getMin", "pop", "top", "getMin"]
+
+    Output: [null,null,null,null,0,null,2,1]
+
+    Explanation:
+    MinStack minStack = new MinStack();
+    minStack.push(1);
+    minStack.push(2);
+    minStack.push(0);
+    minStack.getMin(); // return 0
+    minStack.pop();
+    minStack.top();    // return 2
+    minStack.getMin(); // return 1
+    `,
+    solution: `
+      class MinStack {
+      constructor() {
+        this.stack = [];
+        this.minStack = [];
+      }
+
+      /**
+       * @param {number} val
+       * @return {void}
+       */
+      push(val) {
+        this.stack.push();
+        val = Math.min(val, this.stack.length === 0 ? val : this.stack[this.stack.length - 1]);
+        this.stack.push(val);
+      }
+
+      /**
+       * @return {void}
+       */
+      pop() {
+        this.stack.pop();
+        this.minStack.pop();
+      }
+
+      /**
+       * @return {number}
+       */
+      top() {
+          return this.stack[this.stack.length - 1];
+      }
+
+      /**
+       * @return {number}
+       */
+      getMin() {
+        return this.minStack[this.minStack.length - 1];
+      }
+    }
+    `,
+    approach: `
+      Every funtion is O(1) in term of time complexity, we use the minStack to make sure at every point of the stack
+      we know the min value at the index.
+    `,
+  },
+  {
+    id: 16,
+    difficulty: "Medium",
+    name: "EVALUATE REVERSE POLISH NOTATION",
+    topic: "Stack",
+    question: `
+    You are given an array of strings tokens that represents a valid arithmetic expression in Reverse Polish Notation.
+
+    Return the integer that represents the evaluation of the expression.
+
+    The operands may be integers or the results of other operations.
+    The operators include '+', '-', '*', and '/'.
+    Assume that division between integers always truncates toward zero.
+
+    Example 1:
+
+    Input: tokens = ["1","2","+","3","*","4","-"]
+    Output: 5
+
+    Explanation: ((1 + 2) * 3) - 4 = 5
+    `,
+    solution: `
+      class Solution {
+        evalRPN(tokens) {
+          let arr = ["+", "-", "*", "/"];
+          let stack = [];
+
+          for (const t of tokens) {
+            if (arr.includes(t)) {
+              let num1 = Number(stack.pop());
+              let num2 = Number(stack.pop());
+
+              switch (t) {
+                case "+":
+                  stack.push(num2 + num1);
+                  break;
+                case "-": 
+                  stack.push(num2 - num1);
+                  break;
+                case "*":
+                  stack.push(num2 * num1);
+                  break;
+                case "/":
+                  stack.push(Math.trunc(num2 / num1));
+                  break;
+              } else {
+                stack.push(t);
+              }
+            }
+          }
+          
+          return stack[0];
+        }
+      }
+
+    `,
+    approach: `
+      Tips as soon as we encounter a operands pop 2 num out of stack and push the result back in until we done.
+    `,
+  },
+  {
+    id: 17,
+    difficulty: "Medium",
+    name: "GENTERATE PARENTHESES",
+    topic: "Stack",
+    question: `
+    You are given an integer n. Return all well-formed parentheses strings that you can generate with n pairs of parentheses.
+
+    Example 1:
+
+    Input: n = 1
+    Output: ["()"]
+
+    Example 2:
+
+    Input: n = 3
+    Output: ["((()))","(()())","(())()","()(())","()()()"]
+    `,
+    solution: `
+    class Solution {
+        generateParenthesis(n) {
+          let stack = [];
+          let res = [];
+
+          function backtrack(open, close) {
+            if (open === n && close === n) {
+              res.push(stack.join(""));
+              return;
+            }
+
+            if (open < n) {
+              stack.push("(");
+              backtrack(open + 1, close);
+              stack.pop();
+            }
+
+            if (close < open) {
+              stack.push(")");
+              backtrack(open, close + 1);
+              stack.pop();
+            }
+          }
+          backtrack(0, 0);
+
+          return res;
+        }
+    }
+    `,
+    approach: `
+      Rules:
+      1. If open = close = n -> considered as res case
+      2. We could add "(" as long as open < n
+      3. We could add ")" as long as close < open
+    `,
+  },
 ];
 
 export default problems;
