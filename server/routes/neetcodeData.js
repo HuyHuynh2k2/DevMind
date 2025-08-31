@@ -864,7 +864,7 @@ const problems = [
           let stack = [];
           let res = [];
 
-          function backtrack(open, close) {
+          function backtrack(open, close) { 
             if (open === n && close === n) {
               res.push(stack.join(""));
               return;
@@ -893,6 +893,168 @@ const problems = [
       1. If open = close = n -> considered as res case
       2. We could add "(" as long as open < n
       3. We could add ")" as long as close < open
+
+      Tracing example:
+      ((())) -> ((()) -> ((() -> ((( -> (( -> (() -> (()( -> (()() -> (()()) -> (()() -> (()( -> (()) -> (())( -> (())()
+    `,
+  },
+  {
+    id: 18,
+    difficulty: "Medium",
+    name: "DAILY TEMPERATURES",
+    topic: "Stack",
+    question: `
+    You are given an array of integers temperatures where temperatures[i] represents the daily temperatures on the ith day.
+    
+    Return an array result where result[i] is the number of days after the ith day before a warmer temperature appears on a future day. If there is no day in the future where a warmer temperature will appear for the ith day, set result[i] to 0 instead.
+
+    Example 1:
+
+    Input: temperatures = [30,38,30,36,35,40,28]
+    Output: [1,4,1,2,1,0,0] 
+
+    Example 2:
+
+    Input: temperatures = [22,21,20]
+    Output: [0,0,0]
+    `,
+    solution: `
+    class Solution {
+        dailyTemperatures(temperatures) {
+          let stack = [];
+          let res = [...temperatures].fill(0);
+
+          for (let i = 0; i < temperatures.length; i++) {
+            while (stack.length !== 0 && temperatures[i] > temperatures[stack[stack.length - 1]]) {
+              let prev = stack.pop();
+              res[prev] = i - prev;
+            }
+            stack.push(i);
+          }
+          
+          return res;
+        }
+    }
+    `,
+    approach: `
+      We always compare the current temperatures with the temperatures at top of the stack.
+      
+      [78, 76, 74, 77, 79] -> Stack [0, 1, 2] is when we hit 77 then 77 knock off index 2 (in res arr at index 2 -> 3 - 2),
+      then keep checking 77 vs index 1 (currently stack [0, 1]) we knock it off too (in res arr at index 1 -> 3 - 1) then 77 
+      cant knock off index 1 since it is 78 so currently stack is [1, 3] then go on.
+    `,
+  },
+  {
+    id: 19,
+    difficulty: "Medium",
+    name: "CAR FLEET",
+    topic: "Stack",
+    question: `
+    There are n cars traveling to the same destination on a one-lane highway.
+    You are given two arrays of integers position and speed, both of length n.  
+
+    position[i] is the position of the ith car (in miles)
+    speed[i] is the speed of the ith car (in miles per hour)
+    The destination is at position target miles.
+
+    A car can not pass another car ahead of it. It can only catch up to another car and then drive at the same speed as the car ahead of it.
+
+    A car fleet is a non-empty set of cars driving at the same position and same speed. A single car is also considered a car fleet.
+
+    If a car catches up to a car fleet the moment the fleet reaches the destination, then the car is considered to be part of the fleet.
+
+    Return the number of different car fleets that will arrive at the destination.
+
+    Example 1:
+    Input: target = 10, position = [1,4], speed = [3,2]
+    Output: 1
+
+    Explanation: The cars starting at 1 (speed 3) and 4 (speed 2) become a fleet, meeting each other at 10, the destination.
+
+    Example 2: 
+    Input: target = 10, position = [4,1,0,7], speed = [2,2,1,1]
+    Output: 3
+
+    `,
+    solution: `
+    class Solution {
+        carFleet(target, position, speed) {
+          let cars = [];
+          let stack = [];
+
+          for (let i = 0; i < position.length; i++) {
+            cars.push([position[i], speed[i]]);
+          }
+          
+          cars.sort((a, b) => b[0] - a[0]);
+
+          for (const [p, s] of cars) {
+            stack.push((target - p) / s);
+
+            if (stack.length >= 0 && stack[stack.length -1] <= stack[stack.length -2]) {
+              stack.pop();
+            }
+          }
+          
+          return stack.length;
+        }
+    }
+    `,
+    approach: `
+      Car fleet means how many GROUP of cars can catch up each other when they are ALL finished the race.
+
+      We store the position and speed as a pair and sort them backward respect to position because later on when we
+      iterate through the cars array we went other way. then for the stack as soon as had 2 time in the stack we would consider
+      to pop. For example [3, 3] -> then we pop first 3 then [3, 4] -> we keep it as it is and go on.
+      
+    `,
+  },
+  {
+    id: 20,
+    difficulty: "Hard",
+    name: "LARGEST RECTANGLE IN HISTOGRAM",
+    topic: "Stack",
+    question: `
+    You are given an array of integers heights where heights[i] represents the height of a bar. The width of each bar is 1.
+    Return the area of the largest rectangle that can be formed among the bars.
+
+    Example 1:
+    Input: heights = [7,1,7,2,2,4]
+    Output: 8
+
+    Explanation: The cars starting at 1 (speed 3) and 4 (speed 2) become a fleet, meeting each other at 10, the destination.
+
+    Example 2: 
+    Input: heights = [1,3,7]
+    Output: 7
+
+    `,
+    solution: `
+    class Solution {
+        largestRectangleArea(heights) {
+          const n = heights.length;
+          let maxArea = 0;
+          const stack = [];
+
+          for (let i = 0; i <= n; i++) {
+              while (
+                  stack.length &&
+                  (i === n || heights[stack[stack.length - 1]] >= heights[i])
+              ) {
+                  const height = heights[stack.pop()];
+                  const width =
+                      stack.length === 0 ? i : i - stack[stack.length - 1] - 1;
+                  maxArea = Math.max(maxArea, height * width);
+              }
+              stack.push(i);
+          }
+          return maxArea;
+        }
+    }
+    `,
+    approach: `
+      Will go back
+      
     `,
   },
 ];
