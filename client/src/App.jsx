@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   DataStructure,
   SystemDesign,
@@ -15,8 +16,10 @@ import Work from "./components/Work.jsx";
 import backgroundImg from "./utils/homebg.png";
 
 function Home() {
+  const navigate = useNavigate();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
+  const [dropdown, setDropdown] = useState(false);
 
   // Update glowPos smoothly towards mousePos
   useEffect(() => {
@@ -83,10 +86,37 @@ function Home() {
 
       {/* Navigation */}
       <div className="self-route w-[60%] flex items-center justify-center relative z-10">
-        <div className="flex flex-col gap-5 text-[4rem] font-bold">
-          <Link to="/work">Work</Link>
-          <Link to="/learn">Learn</Link>
-          <Link to="/contact">Contact</Link>
+        <div className="flex flex-col gap-5 text-[4rem] font-bold items-start">
+          <button onClick={() => navigate("/work")}>WORK</button>
+          <button onClick={() => setDropdown(!dropdown)}>LEARN</button>
+
+          {dropdown && (
+            <div className="text-sm text-gray-500 flex flex-col items-start gap-2 dropdown">
+              <button
+                className="dropdown-item hover:text-amber-500 transition-all duration-300"
+                onClick={() => navigate("/learn")}
+                style={{ animationDelay: "0.1s" }}
+              >
+                Study Guide
+              </button>
+              <button
+                className="dropdown-item hover:text-amber-500 transition-all duration-300"
+                onClick={() => navigate("/flashcard")}
+                style={{ animationDelay: "0.2s" }}
+              >
+                Flash Card
+              </button>
+              <button
+                className="dropdown-item hover:text-amber-500 transition-all duration-300"
+                onClick={() => navigate("/ai-agents")}
+                style={{ animationDelay: "0.3s" }}
+              >
+                AI Agent
+              </button>
+            </div>
+          )}
+
+          <button onClick={() => navigate("/contact")}>CONTACT</button>
         </div>
       </div>
     </main>
