@@ -10,6 +10,8 @@ import {
 
 import StudyPage from "./components/StudyPage.jsx";
 import NeetCodePages from "./components/NeetcodePages.jsx";
+import AgentsPage from "./components/AgentsPage.jsx";
+import FlashCardPage from "./components/FlashCardPage.jsx";
 
 import ContactPage from "./components/ContactPage.jsx";
 import Work from "./components/Work.jsx";
@@ -131,6 +133,9 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/work" element={<Work />} />
+
+      <Route path="/ai-agents" element={<AgentsPage />} />
+      <Route path="/flashcard" element={<FlashCardPage />} />
 
       {/* Study page + full topic pages */}
       <Route path="/learn" element={<StudyPage />} />
