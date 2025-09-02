@@ -3,12 +3,17 @@ import sys
 import json
 import traceback
 import re  # <-- added for regex
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+HF_TOKEN = os.getenv("DEEPSEEK_API")
 
 repo_id = "deepseek-ai/DeepSeek-R1"
 llm_client = InferenceClient(
     model=repo_id,
     timeout=300,
-    token="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"
+    token=HF_TOKEN
 )
 
 def get_ai_reply(conversation):
