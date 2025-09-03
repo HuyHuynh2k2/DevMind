@@ -1057,6 +1057,128 @@ const problems = [
       
     `,
   },
+  {
+    id: 21,
+    difficulty: "Easy",
+    name: "Binary Search",
+    topic: "Binary Search",
+    question: `
+    You are given an array of distinct integers nums, sorted in ascending order, and an integer target.
+    
+    Implement a function to search for target within nums. If it exists, then return its index, otherwise, return -1.
+
+    Your solution must be in O(logn) time
+
+    Example 1:
+    Input: nums = [-1,0,2,4,6,8], target = 4
+    Output: 3
+
+    Example 2: 
+    Input: nums = [-1,0,2,4,6,8], target = 3
+    Output: -1
+
+    `,
+    solution: `
+    class Solution {
+        search(nums, target) {
+          let left = 0;
+          let right = nums.length -1;
+
+          while (left <= right) {
+
+            let middle = Math.floor(left + (right - left) / 2);
+
+            let current = nums[middle];
+
+            if (target === current) {
+              return middle;
+            } else if (target < current) {
+              right = middle - 1;
+            } else {
+              left = middle + 1;  
+            }
+          }
+
+          return -1;
+        }
+    }
+    `,
+    approach: `
+      Note: middle calculate by "left + (right - left) / 2" to prevent overflow
+    `,
+  },
+  {
+    id: 22,
+    difficulty: "Medium",
+    name: "SEARCH A 2D MATRIX",
+    topic: "Binary Search",
+    question: `
+    You are given an m x n 2-D integer array matrix and an integer target.
+
+    - Each row in matrix is sorted in non-decreasing order.
+    - The first integer of every row is greater than the last integer of the previous row.
+
+    The Time Complexity must be 0(log(m*n))
+
+    Return true if target exists within matrix or false otherwise.
+
+    Example 1:
+    Input: matrix = [[1,2,4,8],[10,11,12,13],[14,20,30,40]], target = 10
+    Output: true
+
+    Example 2: 
+    Input: matrix = [[1,2,4,8],[10,11,12,13],[14,20,30,40]],
+    target = 15
+
+    `,
+    solution: `
+    class Solution {
+        searchMatrix(matrix, target) {
+          let start = 0;
+          let end = matrix.length -1;
+          let potentialR = 0;
+
+
+          // Only compare to last value of each row
+          while (start <= end) {
+            let middle = Math.floor(start + (end - start) / 2);
+
+            if (target === matrix[middle][matrix[middle].length - 1]) {
+              return true;
+            } else if (target < matrix[middle][matrix[middle].length - 1]) {
+              end = middle - 1;
+            } else {
+              start = middle + 1;
+            }
+            potentialR = middle;
+          }
+
+          // apply Binary Search to that row
+          start = 0;
+          end = matrix[middle].length - 1;
+
+          while(start <= end) {
+            middle = Math.floor(start + (end - start) / 2 );
+
+            if (target === matrix[potentialR][middle]) {
+              return true;
+            } else if (target < matrix[potentialR][middle]) {
+              end = middle - 1;
+            } else {
+              start = middle + 1;
+            }
+          }
+
+          return false;
+        }
+    }
+    `,
+    approach: `
+      If we choose the brute force which just loop through every index would cost O(m*n). 
+      If we choose to binary search for every row it would cost O(m*log(n))
+      If we find the potential row and apply Binary Search on that row it would cost O(logm) + O(logn) = O(log(m*n))
+    `,
+  },
 ];
 
 export default problems;

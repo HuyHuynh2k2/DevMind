@@ -10,6 +10,8 @@ load_dotenv()
 HF_TOKEN = os.getenv("DEEPSEEK_API")
 
 repo_id = "deepseek-ai/DeepSeek-R1"
+
+
 llm_client = InferenceClient(
     model=repo_id,
     timeout=300,
