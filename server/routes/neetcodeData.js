@@ -1179,6 +1179,101 @@ const problems = [
       If we find the potential row and apply Binary Search on that row it would cost O(logm) + O(logn) = O(log(m*n))
     `,
   },
+  {
+    id: 23,
+    difficulty: "Medium",
+    name: "KOKO EATING BANANAS",
+    topic: "Binary Search",
+    question: `
+    You are given an integer array piles where piles[i] is the number of bananas in the ith pile. You are also given an integer h, which represents the number of hours you have to eat all the bananas.
+
+    You may decide your bananas-per-hour eating rate of k. Each hour, you may choose a pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, you may finish eating the pile but you can not eat from another pile in the same hour.
+
+    Return the minimum integer k such that you can eat all the bananas within h hours.
+
+    Example 1:
+    Input: piles = [1,4,3,2], h = 9
+    Output: 2
+
+    Explanation: With an eating rate of 2, you can eat the bananas in 6 hours. With an eating rate of 1, you would need 10 hours to eat all the bananas (which exceeds h=9), thus the minimum eating rate is 2.
+
+    `,
+    solution: `
+    class Solution {
+        minEatingSpeed(piles, h) {
+          let left = 0;
+          let right = Math.max(...piles);
+
+          while (left < right) {
+            let time = 0;
+            let middle = Math.floor(left + (right - left) / 2); // a current rate
+
+            for (const b of piles) {
+              time += Math.floor(b / middle);
+            }
+
+            if (time <= h) {
+              right = middle - 1;
+            } else {
+              left = middle + 1;
+            }
+          }
+
+          return left;
+        }
+    }
+    `,
+    approach: `
+      We can apply binary search on the eating rate between 1 and Math.max(...piles). The middle value is the current rate, and we use it to calculate the total time needed to consume all the piles. If the total time <= h, then the rate is valid, but we can try lowering it (since our goal is to find the minimum rate) by setting right = mid - 1. Eating slower will definitely increase the total time, but we want to keep it within <= h. Otherwise, if the total time > h, it means the current rate is too slow, so we increase it by setting left = mid + 1. In the end, left will store the smallest valid rate, which is our answer.
+    `,
+  },
+  {
+    id: 24,
+    difficulty: "Medium",
+    name: "FIND MINIMUM IN ROTATED SORTED ARRAY",
+    topic: "Binary Search",
+    question: `
+    You are given an array of length n which was originally sorted in ascending order. It has now been rotated between 1 and n times. For example, the array nums = [1,2,3,4,5,6] might become:
+
+    [3,4,5,6,1,2] if it was rotated 4 times.
+    [1,2,3,4,5,6] if it was rotated 6 times.
+    Notice that rotating the array 4 times moves the last four elements of the array to the beginning. Rotating the array 6 times produces the original array.
+
+    Assuming all elements in the rotated sorted array nums are unique, return the minimum element of this array.
+
+    Solve in O(logn);
+
+
+    Example 1:
+    Input: nums = [3,4,5,6,1,2]
+    Output: 1
+
+
+    `,
+    solution: `
+    class Solution {
+      findMin(nums) {
+        let left = 0, right = nums.length -1;
+
+        while (left < right) {
+            let mid = Math.floor(left + (right - left) / 2);
+            if (nums[mid] > nums[right]) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+
+        return nums[left];
+      }
+    }
+    `,
+    approach: `
+      Binary Search on this array if nums[mid] < nums[right] which means the the rotated part / the part that contains min value is there so would could do left = mid + 1, otherwise when nums[mid] < nums[right] that means the nums itself and the front would contains the mins like [4, 5, 6, 7, 0, 1] assume prvious middle was at value 1 can we just cut last part off. 
+
+      And we could either return nums[left] or nums[right], just think about the case [2, 3] when it has only 2 values in array, so nums[mid] = 2 <= 3 so right = mid = 1 at that point left = right = 1.
+    `,
+  },
 ];
 
 export default problems;
