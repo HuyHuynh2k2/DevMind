@@ -1274,6 +1274,143 @@ const problems = [
       And we could either return nums[left] or nums[right], just think about the case [2, 3] when it has only 2 values in array, so nums[mid] = 2 <= 3 so right = mid = 1 at that point left = right = 1.
     `,
   },
+  {
+    id: 25,
+    difficulty: "Medium",
+    name: "SEARCH IN ROTATED SORTED ARRAY",
+    topic: "Binary Search",
+    question: `
+    You are given an array of length n which was originally sorted in ascending order. It has now been rotated between 1 and n times. For example, the array nums = [1,2,3,4,5,6] might become:
+
+    [3,4,5,6,1,2] if it was rotated 4 times.
+    [1,2,3,4,5,6] if it was rotated 6 times.
+    Notice that rotating the array 4 times moves the last four elements of the array to the beginning. Rotating the array 6 times produces the original array.
+
+    Assuming all elements in the rotated sorted array nums are unique, return the minimum element of this array.
+
+    Solve in O(logn);
+
+
+    Example 1:
+    Input: nums = [3,4,5,6,1,2], target = 1
+    Output: 4
+
+    `,
+    solution: `
+    class Solution {
+      search(nums, target) {
+        let left = 0, right = nums.length -1;
+
+        while (left <= right) {
+          let mid = Math.floor((right + left)/2);
+          
+          if (nums[mid] === target) {
+            return mid;
+          } else if (nums[left] < nums[mid]) { // left side is sorted
+            if (target >= nums[left] && target < nums[mid]) {
+              right = mid - 1;
+            } else {
+              left = mid + 1;
+            }
+          } else {
+            if (target > nums[mid] && target <= nums[right]) {
+              left = mid + 1;
+            } else {
+              right = mid - 1;  
+            }
+          }
+        }
+
+        return -1; 
+      }
+    }
+    `,
+    approach: `
+      Base on the value of at mid we could say which part is sorted, and then check if our target is on that range, otherwise check the opposite range.
+    `,
+  },
+  {
+    id: 26,
+    difficulty: "Medium",
+    name: "SEARCH IN ROTATED SORTED ARRAY",
+    topic: "Binary Search",
+    question: `
+    Implement a time-based key-value data structure that supports:
+
+    Storing multiple values for the same key at specified time stamps
+    Retrieving the key's value at a specified timestamp
+    Implement the TimeMap class:
+
+    TimeMap() Initializes the object.
+    void set(String key, String value, int timestamp) Stores the key key with the value value at the given time timestamp.
+    String get(String key, int timestamp) Returns the most recent value of key if set was previously called on it and the most recent timestamp for that key prev_timestamp is less than or equal to the given timestamp (prev_timestamp <= timestamp). If there are no values, it returns "".
+    Note: For all calls to set, the timestamps are in strictly increasing order.
+
+    Input:
+    ["TimeMap", "set", ["alice", "happy", 1], "get", ["alice", 1], "get", ["alice", 2], "set", ["alice", "sad", 3], "get", ["alice", 3]]
+
+    Output:
+    [null, null, "happy", "happy", null, "sad"]
+
+    Explanation:
+    TimeMap timeMap = new TimeMap();
+    timeMap.set("alice", "happy", 1);  // store the key "alice" and value "happy" along with timestamp = 1.
+    timeMap.get("alice", 1);           // return "happy"
+    timeMap.get("alice", 2);           // return "happy", there is no value stored for timestamp 2, thus we return the value at timestamp 1.
+    timeMap.set("alice", "sad", 3);    // store the key "alice" and value "sad" along with timestamp = 3.
+    timeMap.get("alice", 3);           // return "sad"
+
+    `,
+    solution: `
+      class TimeMap {
+        constructor() {
+          this.keyStore = new Map();
+        }
+
+        /**
+         * @param {string} key
+         * @param {string} value
+         * @param {number} timestamp
+         * @return {void}
+         */
+        set(key, value, timestamp) {
+          if (!this.keyStore.has(key)) {
+              this.keyStore.set(key, []);
+          }
+
+          this.keyStore.get(key).push([timestamp, value]);
+        }
+
+        /**
+         * @param {string} key
+         * @param {number} timestamp
+         * @return {string}
+         */
+        get(key, timestamp) {
+          const values = this.keyStore.get(key) || [];
+
+          let left = 0;
+          let right = values.length - 1;
+          let res = "";
+
+          while (left <= right) {
+            let mid = Math.floor((right + left) / 2);
+
+            if (values[mid][0] <= timestamp) {
+                res = values[mid][1];
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+          }
+
+        return res;
+      }
+    }
+    `,
+    approach: `
+      We dont need to sort it before Binary Search because "for all calls to set, the timestamps are in strictly increasing order."    `,
+  },
 ];
 
 export default problems;
