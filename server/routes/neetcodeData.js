@@ -1411,6 +1411,170 @@ const problems = [
     approach: `
       We dont need to sort it before Binary Search because "for all calls to set, the timestamps are in strictly increasing order."    `,
   },
+  {
+    id: 27,
+    difficulty: "Easy",
+    name: "REVERSE LINKED LIST",
+    topic: "Linked List",
+    question: `
+    Given the beginning of a singly linked list head, reverse the list, and return the new beginning of the list.
+
+    Example 1: 
+    Input: head = [0,1,2,3]
+    Output: [3,2,1,0]
+
+    `,
+    solution: `
+      /**
+       * Definition for singly-linked list.
+       * class ListNode {
+       *     constructor(val = 0, next = null) {
+       *         this.val = val;
+       *         this.next = next;
+       *     }
+       * }
+       */
+
+      class Solution {
+          /**
+           * @param {ListNode} head
+           * @return {ListNode}
+           */
+          reverseList(head) {
+              let prev = null;
+              let curr = head;
+
+              while (curr) {
+                  let temp = curr.next;
+                  curr.next = prev;
+                  prev = curr;
+                  curr = temp;
+
+                  console.log(curr);
+              }
+
+              return prev;
+          }
+      }
+    `,
+    approach: `
+      Explaination: So the goal is to reverse the linkedlist backward, so we use prev node which would store null at the beginning, so using while loop as long as the current node !== null then we move on, we set current.next = prev then prev = current and the reason why we use temp = current.next at very beginning was because we want to store it (to move to new node to satisfy the condition of why loop) before change it.
+`,
+  },
+  {
+    id: 28,
+    difficulty: "Easy",
+    name: "MERGE TWO SORTED LINKED LIST",
+    topic: "Linked List",
+    question: `
+    You are given the heads of two sorted linked lists list1 and list2.
+
+    Merge the two lists into one sorted linked list and return the head of the new sorted linked list.
+
+    The new list should be made up of nodes from list1 and list2.
+
+    Example 1: 
+    Input: list1 = [1,2,4], list2 = [1,3,5]
+    Output: [1,1,2,3,4,5]
+
+    `,
+    solution: `
+      /**
+       * Definition for singly-linked list.
+       * class ListNode {
+       *     constructor(val = 0, next = null) {
+       *         this.val = val;
+       *         this.next = next;
+       *     }
+       * }
+       */
+
+      class Solution {
+          /**
+           * @param {ListNode} head
+           * @return {ListNode}
+           */
+          mergeTwoLists(list1, list2) {
+            const dummy = new ListNode(0, null);
+            let node = dummy;
+
+            while (list1 && list2) {
+              if (list1.val <= list2.val) {
+                node.next = list1;
+                list1 = list1.next;
+              } else {
+                node.next = list2;
+                list2 = list2.next;
+              }
+              node = node.next;
+            }
+            
+            return dummy.next;
+          }
+      }
+    `,
+    approach: `
+      The reason why we use dummy node is dummy node would store the same beginning memory address of the node, we do that because the node always need to updated.
+
+      We find list.next first then set node = node.next, instead of setting node = list1 or list2 because we need a connection between the nodes. Otherwise we would lose the node.
+    `,
+  },
+  {
+    id: 29,
+    difficulty: "Easy",
+    name: "LINKED LIST CYCLE DECTION",
+    topic: "Linked List",
+    question: `
+    Given the beginning of a linked list head, return true if there is a cycle in the linked list. Otherwise, return false.
+
+    There is a cycle in a linked list if at least one node in the list can be visited again by following the next pointer.
+
+    Internally, index determines the index of the beginning of the cycle, if it exists. The tail node of the list will set it's next pointer to the index-th node. If index = -1, then the tail node points to null and no cycle exists.
+
+    Note: index is not given to you as a parameter.
+
+    Example 1: 
+    Input: head = [1,2,3,4], index = 1
+    Output: true
+
+    `,
+    solution: `
+      /**
+       * Definition for singly-linked list.
+       * class ListNode {
+       *     constructor(val = 0, next = null) {
+       *         this.val = val;
+       *         this.next = next;
+       *     }
+       * }
+       */
+
+      class Solution {
+          /**
+           * @param {ListNode} head
+           * @return {ListNode}
+           */
+          hasCycle(list1, list2) {
+            let slow = head;
+            let fast = head;
+
+            while (fast && fast.next) {
+              slow = slow.next;
+              fast = fast.next.next;
+
+              if (slow === fast) {
+                return true;
+              }
+            }
+
+            return false;
+          }
+      }
+    `,
+    approach: `
+      We use the idea of slow and fast pointers, the fast pointer always catch up the slow at some point if there is an cycle.
+    `,
+  },
 ];
 
 export default problems;

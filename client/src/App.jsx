@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import {
-  DataStructure,
-  SystemDesign,
-  Algorithm,
-  Interview,
-} from "./components/StudyPage.jsx";
+import { SystemDesign, Algorithm, Interview } from "./components/StudyPage.jsx";
 
 import StudyPage from "./components/StudyPage.jsx";
 import NeetCodePages from "./components/NeetcodePages.jsx";
 import AgentsPage from "./components/AgentsPage.jsx";
 import FlashCardPage from "./components/FlashCardPage.jsx";
+import DataStructurePage from "./components/DataStructurePage.jsx";
 
 import ContactPage from "./components/ContactPage.jsx";
 import Work from "./components/Work.jsx";
@@ -139,7 +135,7 @@ export default function App() {
 
       {/* Study page + full topic pages */}
       <Route path="/learn" element={<StudyPage />} />
-      <Route path="/learn/DataStructure" element={<DataStructure />} />
+      <Route path="/learn/DataStructure" element={<DataStructurePage />} />
       <Route path="/learn/SystemDesign" element={<SystemDesign />} />
       <Route path="/learn/Algorithm" element={<Algorithm />} />
       <Route path="/learn/neetcode" element={<NeetCodePages />} />
