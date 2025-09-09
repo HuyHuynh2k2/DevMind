@@ -1575,6 +1575,219 @@ const problems = [
       We use the idea of slow and fast pointers, the fast pointer always catch up the slow at some point if there is an cycle.
     `,
   },
+  {
+    id: 30,
+    difficulty: "Medium",
+    name: "REORDER LINKED LIST",
+    topic: "Linked List",
+    question: `
+    You are given the head of a singly linked-list.
+
+    The positions of a linked list of length = 7 for example, can intially be represented as:
+
+    [0, 1, 2, 3, 4, 5, 6]
+
+    Reorder the nodes of the linked list to be in the following order:
+
+    [0, 6, 1, 5, 2, 4, 3]
+
+    Notice that in the general case for a list of length = n the nodes are reordered to be in the following order:
+
+    [0, n-1, 1, n-2, 2, n-3, ...]
+
+    You may not modify the values in the list's nodes, but instead you must reorder the nodes themselves.
+
+    `,
+    solution: `
+      /**
+       * Definition for singly-linked list.
+       * class ListNode {
+       *     constructor(val = 0, next = null) {
+       *         this.val = val;
+       *         this.next = next;
+       *     }
+       * }
+       */
+
+      class Solution {
+          /**
+           * @param {ListNode} head
+           * @return {void}
+           */
+          reorderList(head) {
+            let node = [];
+            let curr = head;
+
+            while (curr) {
+              node.push(curr);
+              curr = curr.next;
+            }
+
+            let left = 0; right = node.length - 1;
+
+            while (left < right) {
+              node[left].next = node[right];
+              left++;
+
+              if (left === right) break;
+              
+              node[right].next = node[left];
+              right--;
+            }
+
+            node[left].next = null;
+          }
+      }
+    `,
+    approach: `
+      We store every nodes and its connection into an array, then reorder the connection.
+
+      At first we may wondering what was the relation of node array and curr, so for example if we have [1,2,3,4] as each point to each other and 4 point to the null.
+
+      So node = [1->2->3->4->null, 2->3->4->null, 3->4->null, 4->null]
+
+      By set "let curr = head" we would not mess the order of head when we store value into node array.
+
+      Then set two pointer throught the arr and set up the connection of each node as we want as 0 (left) -> n - 1 (right) -> 2 (left)-> n - 2 (right) and so on.
+    `,
+  },
+  {
+    id: 31,
+    difficulty: "Medium",
+    name: "REMOVE NODE FROM THE END OF LINKED LIST",
+    topic: "Linked List",
+    question: `
+    You are given the beginning of a linked list head, and an integer n.
+
+    Remove the nth node from the end of the list and return the beginning of the list.
+
+    Example 1:
+    Input: head = [1,2,3,4], n = 2
+    Output: [1,2,4]
+
+    Example 2:
+    Input: head = [5], n = 1
+    Output: []
+
+    Example 3:
+    Input: head = [1,2], n = 2
+    Output: [2]
+
+
+    `,
+    solution: `
+      /**
+       * Definition for singly-linked list.
+       * class ListNode {
+       *     constructor(val = 0, next = null) {
+       *         this.val = val;
+       *         this.next = next;
+       *     }
+       * }
+       */
+
+      class Solution {
+        /**
+         * @param {ListNode} head
+         * @param {number} n
+         * @return {ListNode}
+         */
+        removeNthFromEnd(head, n) {
+          // reverse 
+          let prev = null, curr = head;
+          while (curr) {
+            let temp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = temp;
+          }
+
+          // remove
+          let dummy = new ListNode(0, prev);
+          curr = dummy;
+          let pos = 0;
+
+          while (pos < n - 1 && curr.next) {
+            curr = curr.next;
+            pos++;
+          }
+
+          if (curr.next) curr.next = curr.next.next;
+
+          // reverse back
+          prev = null;
+          curr = dummy.next;
+
+          while (curr) {
+            let temp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = temp;
+          }
+          return prev;
+        }
+      }
+    `,
+    approach: `
+      This is not a optimal solution, the idea was we could reverse the linked list since it is hard to track them and remove backward.
+
+      So we reverse the list then remove the target node and reverse it back to the orignal order then return.
+    `,
+  },
+  {
+    id: 32,
+    difficulty: "Easy",
+    name: "BEST TIME TO BUT AND SELL STOCK",
+    topic: "Sliding Window",
+    question: `
+    You are given an integer array prices where prices[i] is the price of NeetCoin on the ith day.
+
+    You may choose a single day to buy one NeetCoin and choose a different day in the future to sell it.
+
+    Return the maximum profit you can achieve. You may choose to not make any transactions, in which case the profit would be 0.
+
+    Example 1:
+    Input: prices = [10,1,5,6,7,1]
+    Output: 6
+    Explanation: Buy prices[1] and sell prices[4], profit = 7 - 1 = 6.
+
+    Example 2:
+    Input: prices = [10,8,7,5,2]
+    Output: 0
+    Explanation: No profitable transactions can be made, thus the max profit is 0.
+
+
+    `,
+    solution: `
+      class Solution {
+        /**
+         * @param {number[]} prices
+         * @return {number}
+         */
+        maxProfit(prices) {
+          let profit = 0;
+          let left = 0, right = 1;
+
+          while (right < prices.length) {
+            if (prices[left] < prices[right]) {
+              profit = Math.max(profit, prices[right] - prices[left]);
+            } else {
+              left = right;
+            }
+            right++;
+          }
+
+          return profit;
+        }
+      }
+    `,
+    approach: `
+      We are using sliding window technique, which set first pointer at day 0 and second at day 1 at first.
+
+      So we always move the right pointer and only move left when prices at left >= prices at right.
+      The reason why we dont need to care what if we miss the price on the left to form the best profit, the answer is WHAT A DUMB QUESTION because that why we move left = right and they are at smaller value now.
+    `,
+  },
 ];
 
 export default problems;
