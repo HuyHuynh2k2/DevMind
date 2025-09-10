@@ -1788,6 +1788,107 @@ const problems = [
       The reason why we dont need to care what if we miss the price on the left to form the best profit, the answer is WHAT A DUMB QUESTION because that why we move left = right and they are at smaller value now.
     `,
   },
+  {
+    id: 33,
+    difficulty: "Medium",
+    name: "LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS",
+    topic: "Sliding Window",
+    question: `
+    Given a string s, find the length of the longest substring without duplicate characters.
+
+    A substring is a contiguous sequence of characters within a string.
+
+    Example 1:
+    Input: s = "zxyzxyz"
+    Output: 3
+
+    Explanation: The string "xyz" is the longest without duplicate characters.
+
+    Example 2:
+    Input: s = "xxxx"
+    Output: 1
+
+
+    `,
+    solution: `
+      class Solution {
+        /**
+         * @param {string} s
+         * @return {number}
+         */
+        lengthOfLongestSubstring(s) {
+          let set = new Set();
+          let left = 0; 
+          let max = 0; 
+
+          for (let right = 0; right < s.length; right++) {
+            while(set.has(s[right])) {
+              set.delete(s[left]);
+              left++;
+            }
+            set.add(s[right]);
+            max = Math.max(max, right - left + 1);
+          }
+
+          return max;
+
+        }
+      }
+    `,
+    approach: `
+      We use Set in this case since it has delete funtion that could delete everywhere, but instead we could use Queue and use shift() as a pop() in JS.
+      
+      Check every element to see if set have it if it does pop until its not and store the max.
+    `,
+  },
+  {
+    id: 34,
+    difficulty: "Medium",
+    name: "PERMUATION IN STRING",
+    topic: "Sliding Window",
+    question: `
+    You are given two strings s1 and s2.
+
+    Return true if s2 contains a permutation of s1, or false otherwise. That means if a permutation of s1 exists as a substring of s2, then return true.
+
+    Both strings only contain lowercase letters.
+
+    Example 1:
+    Input: s1 = "abc", s2 = "lecabee"
+    Output: true
+
+    Explanation: The substring "cab" is a permutation of "abc" and is present in "lecabee".
+
+    Example 2:
+    Input: s1 = "abc", s2 = "lecaabee"
+    Output: false
+
+
+    `,
+    solution: `
+    class Solution {
+      /**
+       * @param {string} s1
+       * @param {string} s2
+       * @return {boolean}
+       */
+      checkInclusion(s1, s2) {
+        if (s1.length > s2.length) return false; // s1 is always the pattern
+
+        let sorter = s1.split("").sort().join("");
+
+        for (let i = 0; i <= s2.length - s1.length; i++) {
+          let current = s2.slice(i, i + s1.length).split("").sort().join("");
+          if (current === sorter) return true;
+        }
+        return false;
+      }
+    }
+    `,
+    approach: `
+      This is not optimal solution
+    `,
+  },
 ];
 
 export default problems;
